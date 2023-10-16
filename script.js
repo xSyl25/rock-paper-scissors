@@ -9,17 +9,13 @@
 // loop game 5 times
 // return a winner
 
-let playerChoice = prompt("Choose! Rock, paper, scissors!");
-
-console.log(playerChoice);
+let playerChoice = prompt("Choose! Rock, paper, scissors!").toLowerCase();
 
 function getComputerChoice() {
-    let options = ["Rock", "Paper", "Scissors"];
+    let options = ["rock", "paper", "scissors"];
     let choice = Math.floor(Math.random() * options.length);
     return options[choice];
 }
-
-console.log(getComputerChoice())
 
 const win = "You win!";
 const lose = "You lose!";
@@ -28,15 +24,18 @@ const playerSelection = playerChoice;
 const computerSelection = getComputerChoice();
 
 function play(playerSelection, computerSelection) {
+    console.log(playerSelection);
+    console.log(computerSelection);
+    
     if(playerSelection === computerSelection) {
         return tie;
-    } else if(playerSelection === "Rock" && computerSelection === "Paper" || playerSelection === "Scissors" && computerSelection === "Rock" || playerSelection === "Paper" && computerSelection === "Scissors") {
+    } else if((playerSelection === "rock" && computerSelection === "paper") || (playerSelection === "scissors" && computerSelection === "rock") || (playerSelection === "paper" && computerSelection === "scissors")) {
         return lose;
-    } else if(playerSelection === "Rock" && computerSelection === "Scissors" || playerSelection === "Scissors"  && computerSelection === "Paper" || playerSelection === "Paper" && computerSelection === "Rock") {
+    } else if((playerSelection === "rock" && computerSelection === "scissors") || (playerSelection === "scissors"  && computerSelection === "paper") || (playerSelection === "paper" && computerSelection === "rock")) {
         return win;
     } else {
-        return "Invalid choice."
+        return "Invalid choice.";
     }
 }
 
-console.log(play())
+console.log(play(playerSelection, computerSelection));
