@@ -24,28 +24,16 @@ console.log(getComputerChoice())
 const win = "You win!";
 const lose = "You lose!";
 const tie = "It's a tie!";
+const playerSelection = playerChoice;
+const computerSelection = getComputerChoice();
 
-function play() {
-    if(playerChoice === getComputerChoice()) {
+function play(playerSelection, computerSelection) {
+    if(playerSelection === computerSelection) {
         return tie;
-    } else if(playerChoice === "Rock") {
-        if(getComputerChoice() === "Paper") {
-            return lose;
-        } else if(getComputerChoice() === "Scissors") {
-            return win;
-        }
-    } else if(playerChoice === "Paper") {
-        if(getComputerChoice() === "Scissors") {
-            return lose;
-        } else if(getComputerChoice() === "Rock") {
-            return win;
-        }
-    } else if(playerChoice === "Scissors") {
-        if(getComputerChoice() === "Rock") {
-            return lose;
-        } else if(getComputerChoice() === "Paper") {
-            return win;
-        }
+    } else if(playerSelection === "Rock" && computerSelection === "Paper" || playerSelection === "Scissors" && computerSelection === "Rock" || playerSelection === "Paper" && computerSelection === "Scissors") {
+        return lose;
+    } else if(playerSelection === "Rock" && computerSelection === "Scissors" || playerSelection === "Scissors"  && computerSelection === "Paper" || playerSelection === "Paper" && computerSelection === "Rock") {
+        return win;
     } else {
         return "Invalid choice."
     }
