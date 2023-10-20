@@ -9,8 +9,6 @@
 // loop game 5 times
 // return a winner
 
-let playerChoice = prompt("Choose! Rock, paper, scissors!").toLowerCase();
-
 function getComputerChoice() {
     let options = ["rock", "paper", "scissors"];
     let choice = Math.floor(Math.random() * options.length);
@@ -20,22 +18,51 @@ function getComputerChoice() {
 const win = "You win!";
 const lose = "You lose!";
 const tie = "It's a tie!";
-const playerSelection = playerChoice;
-const computerSelection = getComputerChoice();
 
 function play(playerSelection, computerSelection) {
-    console.log(playerSelection);
-    console.log(computerSelection);
-    
+
     if(playerSelection === computerSelection) {
         return tie;
     } else if((playerSelection === "rock" && computerSelection === "paper") || (playerSelection === "scissors" && computerSelection === "rock") || (playerSelection === "paper" && computerSelection === "scissors")) {
-        return lose;
+        return `${lose} ${computerSelection} beats ${playerSelection}!`;
     } else if((playerSelection === "rock" && computerSelection === "scissors") || (playerSelection === "scissors"  && computerSelection === "paper") || (playerSelection === "paper" && computerSelection === "rock")) {
-        return win;
+        return `${win} ${playerSelection} beats ${computerSelection}!`;
     } else {
         return "Invalid choice.";
     }
 }
 
-console.log(play(playerSelection, computerSelection));
+function getPlayerChoice() {
+    let playerChoice = "Choose! Rock, paper, scissors!";
+    return window.prompt(playerChoice).toLowerCase();
+}
+
+function game() {
+    let playerScore = 0;
+    let computerScore = 0;
+
+    for(let i = 0; i < 5; i++) {
+        let playerSelection = getPlayerChoice();
+        let computerSelection = getComputerChoice();
+        console.log(play(playerSelection, computerSelection));
+
+        if(play(playerSelection, computerSelection) === `${win} ${playerSelection} beats ${computerSelection}!`) {
+            playerScore++;
+        } else if(play(playerSelection, computerSelection) === `${lose} ${computerSelection} beats ${playerSelection}!`) {
+            computerScore++;
+        } else {
+            playerScore++, computerScore++;
+        }
+        
+    }
+
+    if(playerScore > computerScore) {
+        return("Game over! Player wins!");
+    } else if(computerScore > playerScore) {
+        return("Game over! Computer wins!");
+    } else {
+        return("Game over! It's a tie!")
+    }
+}
+
+console.log(game());
