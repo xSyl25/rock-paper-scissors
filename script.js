@@ -17,16 +17,27 @@ ul.textContent = "Rounds:";
 ul.style.padding = "0px";
 ul.style.fontWeight = "700";
 
+let playVar;
+
 btnRock.addEventListener("click", () => {
-    play("Rock", getComputerChoice())
+    playVar = playRound("Rock", getComputerChoice());
+    setTimeout(() => {
+        game();
+    }, 100);
 });
 
 btnPaper.addEventListener("click", () => {
-    play("Paper", getComputerChoice())
+    playVar = playRound("Paper", getComputerChoice());
+    setTimeout(() => {
+        game();
+    }, 100);
 });
 
 btnScissors.addEventListener("click", () => {
-    play("Scissors", getComputerChoice())
+    playVar = playRound("Scissors", getComputerChoice());
+    setTimeout(() => {
+        game();
+    }, 100);
 });
 
 function getComputerChoice() {
@@ -38,9 +49,8 @@ function getComputerChoice() {
 const win = "You win!";
 const lose = "You lose!";
 const tie = "It's a tie!";
-const invalid = "Invalid choice!";
 
-function play(playerSelection, computerSelection) {
+function playRound(playerSelection, computerSelection) {
     const li = document.createElement("li");
     const span = document.createElement("span");
 
@@ -49,55 +59,52 @@ function play(playerSelection, computerSelection) {
 
     li.style.fontWeight = "300";
 
-    li.focus();
-
     if(playerSelection === computerSelection) {
         span.textContent = tie;
         return tie;
     } else if((playerSelection === "Rock" && computerSelection === "Paper") || 
         (playerSelection === "Scissors" && computerSelection === "Rock") || 
         (playerSelection === "Paper" && computerSelection === "Scissors")) {
-            span.textContent = `${lose} ${computerSelection} beats ${playerSelection}!`
-            return `${lose} ${computerSelection} beats ${playerSelection}!`;
-    } else if((playerSelection === "Rock" && computerSelection === "Scissors") || 
-        (playerSelection === "Scissors"  && computerSelection === "Paper") || 
-        (playerSelection === "Paper" && computerSelection === "Rock")) {
-            span.textContent =  `${win} ${playerSelection} beats ${computerSelection}!`;
-            return `${win} ${playerSelection} beats ${computerSelection}!`;
+        span.textContent = `${lose} ${computerSelection} beats ${playerSelection}!`
+        return lose;
     } else {
-        span.textContent = invalid;
-        return invalid;
+        span.textContent =  `${win} ${playerSelection} beats ${computerSelection}!`;
+        return win;
     }
 }
 
+let playerScore = 0;
+let computerScore = 0;
+
+const newDiv = document.createElement("div");
+newDiv.style.fontWeight = "700";
+body.appendChild(newDiv);
+newDiv.textContent = `Player ${playerScore} - Computer ${computerScore}`;
+
 function game() {
-    const newDiv = document.createElement("div");
-    const result = document.createElement("p");
 
-    body.appendChild(newDiv);
-    body.appendChild(result);
-
-    newDiv.textContent = `Score:\n Player: ${playerScore} - Computer: ${computerScore}`;
-
-    result.style.fontWeight = "700";
-    
-    let playerScore = 0;
-    let computerScore = 0;
-    console.log(playerScore, computerScore);
-
-    if(play(playerSelection, computerSelection) === `${win} ${playerSelection} beats ${computerSelection}!`) {
+    if(playVar === win) {
         playerScore++;
-    } else if(play(playerSelection, computerSelection) === `${lose} ${computerSelection} beats ${playerSelection}!`) {
+    } else if(playVar === lose) {
         computerScore++;
     } else {
         playerScore++, computerScore++;
     }
 
+    newDiv.textContent = `Player ${playerScore} - Computer ${computerScore}`;
+
+    const p = document.createElement("p");
+    newDiv.appendChild(p);
+
+
     if(playerScore === 5) {
-        return "Game over! Player wins!";
+        p.textContent = "Game over! Player wins!";
+        return;
     } else if(computerScore === 5) {
-        return "Game over! Computer wins!";
+        p.textContent = "Game over! Computer wins!";
+        return;
     } else if(playerScore === 5 && computerScore === 5) {
-        return "Game over! It's a tie!";
+        p.textContent = "Game over! It's a tie!";
+        return;
     }
 }
