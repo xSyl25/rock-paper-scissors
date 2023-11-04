@@ -69,7 +69,6 @@ const lose = "You lose!";
 const tie = "It's a tie!";
 
 function playRound(playerSelection, computerSelection) {
-
     if(playerSelection === computerSelection) {
         p.textContent = tie;
         return tie;
@@ -97,12 +96,11 @@ mainDiv.appendChild(newDiv);
 
 const scoreP = document.createElement("p");
 newDiv.appendChild(scoreP);
-scoreP.textContent = `Player ${playerScore} - Computer ${computerScore}`;
 scoreP.style.margin = "0 auto";
 scoreP.style.fontSize = "16px";
+scoreP.textContent = `Player ${playerScore} - Computer ${computerScore}`;
 
 function game() {
-
     if(playVar === win) {
         playerScore++;
     } else if(playVar === lose) {
