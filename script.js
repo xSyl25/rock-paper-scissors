@@ -1,21 +1,39 @@
 const body = document.querySelector("body");
+const mainTitle = document.createElement("h1");
+const mainDiv = document.createElement("div");
 const btnRock = document.createElement("button");
 const btnPaper = document.createElement("button");
 const btnScissors = document.createElement("button");
-const ul = document.createElement("ul");
+const p = document.createElement("p");
 
-body.appendChild(btnRock);
-body.appendChild(btnPaper);
-body.appendChild(btnScissors);
-body.appendChild(ul);
+btnRock.classList.add("btn");
+btnPaper.classList.add("btn");
+btnScissors.classList.add("btn");
 
+body.appendChild(mainDiv);
+mainDiv.appendChild(mainTitle);
+mainDiv.appendChild(btnRock);
+mainDiv.appendChild(btnPaper);
+mainDiv.appendChild(btnScissors);
+mainDiv.appendChild(p);
+
+mainTitle.textContent = "Rock, Paper, Scissors!";
 btnRock.textContent = "Rock";
 btnPaper.textContent = "Paper";
 btnScissors.textContent = "Scissors";
-ul.textContent = "Rounds:";
 
-ul.style.padding = "0px";
-ul.style.fontWeight = "700";
+body.setAttribute("style", "background: #b0b0b0; margin: auto");
+mainTitle.setAttribute("style", "paddingBottom: 1em");
+mainDiv.setAttribute("style", "display: flex; height: 100vh");
+mainDiv.style.flexDirection = "column";
+mainDiv.style.alignItems = "center";
+mainDiv.style.justifyContent = "center";
+btnRock.setAttribute("style", "width: 20%; padding: 0.5em; margin: 0.5em; position: static");
+btnPaper.setAttribute("style", "width: 20%; padding: 0.5em; margin: 0.5em; position: static");
+btnScissors.setAttribute("style", "width: 20%; padding: 0.5em; margin: 0.5em; position: static");
+p.style.padding = "0"; 
+p.style.fontWeight = "700";
+p.style.textAlign = "center";
 
 let playVar;
 
@@ -51,24 +69,17 @@ const lose = "You lose!";
 const tie = "It's a tie!";
 
 function playRound(playerSelection, computerSelection) {
-    const li = document.createElement("li");
-    const span = document.createElement("span");
-
-    ul.appendChild(li);
-    li.appendChild(span)
-
-    li.style.fontWeight = "300";
 
     if(playerSelection === computerSelection) {
-        span.textContent = tie;
+        p.textContent = tie;
         return tie;
     } else if((playerSelection === "Rock" && computerSelection === "Paper") || 
         (playerSelection === "Scissors" && computerSelection === "Rock") || 
         (playerSelection === "Paper" && computerSelection === "Scissors")) {
-        span.textContent = `${lose} ${computerSelection} beats ${playerSelection}!`
+        p.textContent = `${lose} ${computerSelection} beats ${playerSelection}!`
         return lose;
     } else {
-        span.textContent =  `${win} ${playerSelection} beats ${computerSelection}!`;
+        p.textContent =  `${win} ${playerSelection} beats ${computerSelection}!`;
         return win;
     }
 }
@@ -78,8 +89,17 @@ let computerScore = 0;
 
 const newDiv = document.createElement("div");
 newDiv.style.fontWeight = "700";
-body.appendChild(newDiv);
-newDiv.textContent = `Player ${playerScore} - Computer ${computerScore}`;
+newDiv.style.display = "flex";
+newDiv.style.flexDirection = "column";
+newDiv.style.width = "100%";
+newDiv.style.alignItems = "center";
+mainDiv.appendChild(newDiv);
+
+const scoreP = document.createElement("p");
+newDiv.appendChild(scoreP);
+scoreP.textContent = `Player ${playerScore} - Computer ${computerScore}`;
+scoreP.style.margin = "0 auto";
+scoreP.style.fontSize = "16px";
 
 function game() {
 
@@ -91,20 +111,27 @@ function game() {
         playerScore++, computerScore++;
     }
 
-    newDiv.textContent = `Player ${playerScore} - Computer ${computerScore}`;
+    scoreP.textContent = `Player ${playerScore} - Computer ${computerScore}`;
+    
+    const gameOverP = document.createElement("p");
+    newDiv.appendChild(gameOverP);
+    gameOverP.style.margin = "0.1em auto";
+    gameOverP.style.fontSize = "18px"
 
-    const p = document.createElement("p");
-    newDiv.appendChild(p);
-
-
-    if(playerScore === 5) {
-        p.textContent = "Game over! Player wins!";
-        return;
-    } else if(computerScore === 5) {
-        p.textContent = "Game over! Computer wins!";
-        return;
+    if(playerScore === 5 && computerScore !== 5) {
+        gameOverP.textContent = "Game over! Player wins!";
+        setTimeout(() => {
+            location.reload();
+        }, 1500);
+    } else if(computerScore === 5 && playerScore !== 5) {
+        gameOverP.textContent = "Game over! Computer wins!";
+        setTimeout(() => {
+            location.reload();
+        }, 1500);
     } else if(playerScore === 5 && computerScore === 5) {
-        p.textContent = "Game over! It's a tie!";
-        return;
+        gameOverP.textContent = "Game over! It's a tie!";
+        setTimeout(() => {
+            location.reload();
+        }, 1500);
     }
 }
